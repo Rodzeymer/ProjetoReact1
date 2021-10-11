@@ -1,11 +1,15 @@
 import React from "react";
 import { useState } from "react";
+import axios from "axios";
+import { useHistory } from "react-router-dom";
 import "./App.css";
 
 const initialState = { name: "", email: "", CPF: "" };
 
 function App() {
   const [formValues, setFormValues] = useState(initialState);
+
+  const history = useHistory();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -16,6 +20,12 @@ function App() {
     e.preventDefault();
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
+
+    axios
+      .post("https://crudcrud.com/api/0da4336fee6a49feb53d9bc0aba3e06f", data)
+      .then((response) => {
+        history.push("/");
+      });
 
     console.log("Submetido", data);
   };
