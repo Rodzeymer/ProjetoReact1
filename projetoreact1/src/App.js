@@ -1,79 +1,113 @@
-import logo from "./logo.svg";
+import React from "react";
+import { useState } from "react";
 import "./App.css";
 
+const initialState = { name: "", email: "", CPF: "" };
+
 function App() {
+  const [formValues, setFormValues] = useState(initialState);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormValues({ ...formValues, [name]: value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData);
+
+    console.log("Submetido", data);
+  };
+
+  console.log("formValues", formValues);
+
   return (
     <div className="App">
-      <form>
-        <label>
-          "Nome: "
-          <input
-            type="text"
-            name="name"
-            placeholder="Digite seu nome completo"
-          />
-        </label>
-      </form>
-      <form>
-        <label>
-          "Data de nascimento: "
-          <input
-            type="date"
-            name="birthday"
-            required
-            pattern="[0-9]{2}-[0-9]{2}-[0-9]{4}"
-          />
-        </label>
-      </form>
-      <form>
-        <label>
-          "Gênero: "
-          <select name="gender">
-            <option value=" "> </option>
-            <option value="Masculino">Masculino</option>
-            <option value="Feminino">Feminino</option>
-            <option value="Trans">Trans</option>
-            <option value="Não-Binário">Não-Binário</option>
-          </select>
-        </label>
-      </form>
-      <form>
-        <label>
-          "E-mail: "
-          <input type="email" name="e-mail" placeholder="Digite seu E-mail" />
-        </label>
-      </form>
-      <form>
-        <label>
-          "CPF: (Apenas números)"
-          <input type="number" ame="CPF" placeholder="Digite seu CPF " />
-        </label>
-      </form>
-      <form>
-        <label>
-          "Data inicial: "
-          <input
-            type="date"
-            name="inicial"
-            required
-            pattern="[0-9]{2}-[0-9]{2}-[0-9]{4}"
-          />
-        </label>
-      </form>
-      <form>
-        <label>
-          "Time: "
-          <select name="time">
-            <option value=" "> </option>
-            <option value="Mobile">Mobile</option>
-            <option value="Frontend">Frontend</option>
-            <option value="Backend">Backend</option>
-            <option value="Nulo">Nulo</option>
-          </select>
-        </label>
-      </form>
+      <h1>Cadastro de Usuário</h1>
+      <br />
 
-      <input type="submit" value="Enviar" />
+      <form onSubmit={handleSubmit}>
+        <label>Nome: </label>
+        <input
+          type="text"
+          name="name"
+          placeholder="Digite seu nome completo"
+          onChange={handleInputChange}
+          value={formValues.name || ""}
+          required
+        />
+
+        <br />
+
+        <label>Data de nascimento: </label>
+        <input
+          type="date"
+          name="birthday"
+          pattern="[0-9]{2}-[0-9]{2}-[0-9]{4}"
+          required
+        />
+
+        <br />
+
+        <label>Gênero: </label>
+        <select name="genero" required>
+          <option value=" "> </option>
+          <option value="Masculino">Masculino</option>
+          <option value="Feminino">Feminino</option>
+          <option value="Trans">Trans</option>
+          <option value="Não-Binário">Não-Binário</option>
+        </select>
+
+        <br />
+
+        <label>E-mail: </label>
+        <input
+          type="email"
+          name="email"
+          placeholder="Digite seu E-mail"
+          onChange={handleInputChange}
+          value={formValues.email || ""}
+          required
+        />
+
+        <br />
+
+        <label>"CPF: (Apenas números)"</label>
+        <input
+          type="text"
+          name="CPF"
+          placeholder="Digite seu CPF"
+          onChange={handleInputChange}
+          value={formValues.CPF || ""}
+          required
+        />
+
+        <br />
+
+        <label>"Data inicial: "</label>
+        <input
+          type="date"
+          name="inicial"
+          pattern="[0-9]{2}-[0-9]{2}-[0-9]{4}"
+          required
+        />
+
+        <br />
+
+        <label>"Time: "</label>
+        <select name="time">
+          <option value=" "> </option>
+          <option value="Mobile">Mobile</option>
+          <option value="Frontend">Frontend</option>
+          <option value="Backend">Backend</option>
+          <option value="Nulo">Nulo</option>
+        </select>
+
+        <br />
+
+        <input className="enviar" type="submit" value="Enviar" />
+      </form>
     </div>
   );
 }
