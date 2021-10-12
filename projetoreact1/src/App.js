@@ -18,8 +18,7 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const formData = new FormData(e.target);
-    const data = Object.fromEntries(formData);
+    const formData = JSON.parse()
 
     axios
       .post("https://crudcrud.com/api/0da4336fee6a49feb53d9bc0aba3e06f", data)
